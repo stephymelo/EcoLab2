@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button botonIntento;
     private Integer respuesta;
     private TextView contadorText;
+    private Integer clicks;
+    private Boolean boo;
     ArrayList<Pregunta> preguntasArray = new ArrayList<Pregunta>();
 
 
@@ -50,13 +52,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         preguntasArray.add(new Pregunta("4x2", "8"));
         preguntasArray.add(new Pregunta("5x2", "10"));
 
+
         botonsito.setOnClickListener(this);
+        botonIntento.setOnClickListener(this);
+
         PreguntaRandom();
 
 
         sumaConter = 0;
-        contador = 30;
-
+        contador = 31;
+        clicks=1;
+        boo=true;
+        AparecerBoton();
 
 
         respuestaBox.setOnTouchListener(
@@ -69,45 +76,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-//        botonIntento.setOnClickListener(
-//                (v) -> {
-//                    new Thread ((Runnable)()->{
-//                        try{
-//
-//                    }catch(IOException e){
-//                            e.printStackTrace();
-//                    }
-//
-//
-//                }).start();
-//        );
-//
-//
-//    }
 
 
-        botonIntento.setOnClickListener(
-                (v) -> {
 
-                    new Thread(
-                            () -> {
-                                while (true) {
-                                    try {
-                                        Thread.sleep(1000);
+        respuestaBox.setOnTouchListener(
 
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    contador++;
-                                    runOnUiThread(
-                                            () -> {
-                                                contadorText.setText("" + contador);
+                (view,event) -> {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            clicks+=1;
+                            if(clicks<=2){
+                                new Thread(
+                                        () -> {
+                                            while (boo) {
+                                                try {
+                                                    Thread.sleep(300);
+
+
+
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                contador--;
+                                                if(contador==0){
+                                                    boo=false;
+
+
+                                                }
+
+
+
+                                                runOnUiThread(
+                                                        () -> {
+                                                            contadorText.setText("" + contador.toString());
+                                                            if(contador==0){
+                                                                botonIntento.setVisibility(View.VISIBLE);
+                                                                boo=true;
+                                                                clicks=1;
+
+                                                            }
+                                                        }
+                                                );
                                             }
-                                    );
-                                }
 
 
-                            }).start();
+
+
+                                        }).start();
+                            }
+
+
+                        break;
+
+                        case MotionEvent.ACTION_UP:
+
+
+
+                            break;
+
+                    }
+                    return true;
                 }
         );
 
@@ -115,12 +143,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 }
 
-    public void Contador() {
-        contador++;
-        contadorText.setText(contador.toString());
 
 
-    }
+
+
+
 
 
     public void PreguntaRandom() {
@@ -134,6 +161,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pregunta.setText(preguntasArray.get(respuesta).getPregunta());
 
     }
+
+    public void AparecerBoton(){
+        if(contador==0){
+
+            clicks=1;
+            boo=false;
+//            Toast.makeText(this,"holi",Toast.LENGTH_LONG).show();
+            botonIntento.setVisibility(View.VISIBLE);
+        }else{
+            botonIntento.setVisibility(View.GONE);
+        }
+
+    }
+
 
     public void onClick(View v) {
 
@@ -155,6 +196,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 }
+
+
+                break;
+            case R.id.botonIntento:
+                Log.e("funciono", "onClick: " );
+                contador=30;
+                contadorText.setText("" + contador.toString());
+                botonIntento.setVisibility(View.GONE);
 
 
                 break;
