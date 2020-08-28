@@ -51,6 +51,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         preguntasArray.add(new Pregunta("10x2", "20"));
         preguntasArray.add(new Pregunta("4x2", "8"));
         preguntasArray.add(new Pregunta("5x2", "10"));
+        preguntasArray.add(new Pregunta("80/2", "40"));
+        preguntasArray.add(new Pregunta("15x5", "75"));
+        preguntasArray.add(new Pregunta("100x2", "50"));
+        preguntasArray.add(new Pregunta("5+90", "95"));
+        preguntasArray.add(new Pregunta("197x0", "0"));
+        preguntasArray.add(new Pregunta("200-1", "199"));
+        preguntasArray.add(new Pregunta("11x12", "132"));
+        preguntasArray.add(new Pregunta("60/3", "20"));
 
 
         botonsito.setOnClickListener(this);
