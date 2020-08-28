@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 contador=30;
                 contadorText.setText("" + contador.toString());
                 botonIntento.setVisibility(View.GONE);
+                sumaConter=0;
 
 
                 break;
